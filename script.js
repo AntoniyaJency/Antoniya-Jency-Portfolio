@@ -26,8 +26,109 @@ function createParticles() {
     }
 }
 
+// Avatar Integration Functions
+function loadImageAvatar(imagePath) {
+    const avatarImage = document.getElementById('avatar-image');
+    const placeholder = document.getElementById('avatar-placeholder');
+    
+    if (avatarImage && placeholder) {
+        avatarImage.src = imagePath;
+        avatarImage.onload = () => {
+            avatarImage.style.display = 'block';
+            placeholder.style.display = 'none';
+        };
+        avatarImage.onerror = () => {
+            console.error('Failed to load avatar image');
+        };
+    }
+}
+
+function loadLottieAvatar(lottieUrl, containerId = 'lottie-avatar') {
+    // Load Lottie library if not already loaded
+    if (typeof lottie === 'undefined') {
+        const script = document.createElement('script');
+        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js';
+        script.onload = () => {
+            initializeLottie(lottieUrl, containerId);
+        };
+        document.head.appendChild(script);
+    } else {
+        initializeLottie(lottieUrl, containerId);
+    }
+}
+
+function initializeLottie(lottieUrl, containerId) {
+    const container = document.getElementById(containerId);
+    const placeholder = document.getElementById('avatar-placeholder');
+    
+    if (container && placeholder) {
+        container.style.display = 'block';
+        placeholder.style.display = 'none';
+        
+        lottie.loadAnimation({
+            container: container,
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            path: lottieUrl
+        });
+    }
+}
+
+function load3DAvatar(modelUrl) {
+    // Load model-viewer library if not already loaded
+    if (typeof modelViewer === 'undefined') {
+        const script = document.createElement('script');
+        script.type = 'module';
+        script.src = 'https://ajax.googleapis.com/ajax/libs/model-viewer/3.3.0/model-viewer.min.js';
+        script.onload = () => {
+            initialize3DAvatar(modelUrl);
+        };
+        document.head.appendChild(script);
+    } else {
+        initialize3DAvatar(modelUrl);
+    }
+}
+
+function initialize3DAvatar(modelUrl) {
+    const avatar3d = document.getElementById('avatar-3d');
+    const placeholder = document.getElementById('avatar-placeholder');
+    
+    if (avatar3d && placeholder) {
+        avatar3d.src = modelUrl;
+        avatar3d.style.display = 'block';
+        placeholder.style.display = 'none';
+    }
+}
+
+function loadSVGAvatar(svgContent) {
+    const avatarSvg = document.getElementById('avatar-svg');
+    const placeholder = document.getElementById('avatar-placeholder');
+    
+    if (avatarSvg && placeholder) {
+        avatarSvg.innerHTML = svgContent;
+        avatarSvg.style.display = 'block';
+        placeholder.style.display = 'none';
+    }
+}
+
 // Initialize particles on page load
 window.addEventListener('load', createParticles);
+
+// Example: Uncomment and configure one of these based on your avatar type
+// window.addEventListener('load', () => {
+//     // Option 1: Image/GIF Avatar
+//     loadImageAvatar('path/to/your/avatar.gif');
+//     
+//     // Option 2: Lottie Animation
+//     // loadLottieAvatar('path/to/your/animation.json');
+//     
+//     // Option 3: 3D Model (GLB/GLTF)
+//     // load3DAvatar('path/to/your/model.glb');
+//     
+//     // Option 4: Animated SVG
+//     // loadSVGAvatar('<svg>...</svg>');
+// });
 
 // Mobile Menu Toggle
 const hamburger = document.getElementById('hamburger');
