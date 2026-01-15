@@ -148,13 +148,13 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 120px 20px 80px;
-    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+    padding: 100px 20px 50px;
+    background: linear-gradient(135deg, #1a0b2e 0%, #2d1b4e 50%, #4a2c6a 100%);
     position: relative;
     overflow: hidden;
 }
 
-/* Particles/Stars Background - More Subtle */
+/* Particles/Stars Background */
 .particles {
     position: absolute;
     top: 0;
@@ -163,37 +163,36 @@ body {
     height: 100%;
     overflow: hidden;
     z-index: 0;
-    opacity: 0.3;
 }
 
 .particle {
     position: absolute;
-    width: 1.5px;
-    height: 1.5px;
-    background: rgba(255, 255, 255, 0.4);
+    width: 2px;
+    height: 2px;
+    background: white;
     border-radius: 50%;
-    animation: twinkle 4s infinite;
+    opacity: 0.6;
+    animation: twinkle 3s infinite;
 }
 
 @keyframes twinkle {
     0%, 100% {
-        opacity: 0.1;
+        opacity: 0.2;
         transform: scale(1);
     }
     50% {
-        opacity: 0.4;
-        transform: scale(1.2);
+        opacity: 0.8;
+        transform: scale(1.5);
     }
 }
 
 .hero-container {
-    max-width: 1400px;
+    max-width: 1200px;
     margin: 0 auto;
     width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
+    display: flex;
     align-items: center;
+    justify-content: center;
     position: relative;
     z-index: 1;
     padding: 0 20px;
@@ -201,7 +200,77 @@ body {
 
 .hero-content {
     color: white;
-    text-align: left;
+    text-align: center;
+    width: 100%;
+}
+
+.title-text-small {
+    display: block;
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin-bottom: 1rem;
+    opacity: 0.9;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+}
+
+.name-glow {
+    display: block;
+    font-size: 6rem;
+    font-weight: 900;
+    margin-bottom: 1rem;
+    color: white;
+    text-shadow: 
+        0 0 10px rgba(139, 92, 246, 0.8),
+        0 0 20px rgba(139, 92, 246, 0.6),
+        0 0 30px rgba(139, 92, 246, 0.4),
+        0 0 40px rgba(139, 92, 246, 0.3),
+        0 0 70px rgba(139, 92, 246, 0.2);
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    animation: glow-pulse 3s ease-in-out infinite;
+    position: relative;
+}
+
+.name-glow::before {
+    content: 'ANTONIYA JENCY';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: rgba(139, 92, 246, 0.3);
+    filter: blur(20px);
+    z-index: -1;
+}
+
+@keyframes glow-pulse {
+    0%, 100% {
+        text-shadow: 
+            0 0 10px rgba(139, 92, 246, 0.8),
+            0 0 20px rgba(139, 92, 246, 0.6),
+            0 0 30px rgba(139, 92, 246, 0.4),
+            0 0 40px rgba(139, 92, 246, 0.3),
+            0 0 70px rgba(139, 92, 246, 0.2);
+    }
+    50% {
+        text-shadow: 
+            0 0 15px rgba(139, 92, 246, 1),
+            0 0 25px rgba(139, 92, 246, 0.8),
+            0 0 35px rgba(139, 92, 246, 0.6),
+            0 0 50px rgba(139, 92, 246, 0.4),
+            0 0 80px rgba(139, 92, 246, 0.3);
+    }
+}
+
+.title-text-large {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    opacity: 0.95;
+    letter-spacing: 3px;
+    text-transform: uppercase;
 }
 
 /* Avatar Container */
@@ -216,8 +285,8 @@ body {
 .avatar-wrapper {
     position: relative;
     width: 100%;
-    max-width: 450px;
-    height: 450px;
+    max-width: 500px;
+    height: 500px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -227,21 +296,21 @@ body {
     width: 100%;
     height: 100%;
     object-fit: contain;
-    animation: avatar-float 8s ease-in-out infinite;
-    filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
+    animation: avatar-float 6s ease-in-out infinite;
+    filter: drop-shadow(0 0 30px rgba(139, 92, 246, 0.5));
 }
 
 .avatar-3d {
     width: 100%;
     height: 100%;
     background: transparent;
-    animation: avatar-float 8s ease-in-out infinite;
+    animation: avatar-float 6s ease-in-out infinite;
 }
 
 .avatar-svg {
     width: 100%;
     height: 100%;
-    animation: avatar-float 8s ease-in-out infinite;
+    animation: avatar-float 6s ease-in-out infinite;
 }
 
 .avatar-placeholder {
@@ -251,34 +320,50 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px dashed rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
     color: white;
     backdrop-filter: blur(10px);
+    animation: avatar-float 6s ease-in-out infinite;
 }
 
 .avatar-placeholder i {
-    font-size: 4rem;
+    font-size: 5rem;
     margin-bottom: 1rem;
-    opacity: 0.5;
-    color: rgba(255, 255, 255, 0.6);
+    opacity: 0.7;
+    color: rgba(139, 92, 246, 0.8);
 }
 
 .avatar-placeholder p {
-    font-size: 0.875rem;
-    opacity: 0.5;
+    font-size: 0.9rem;
+    opacity: 0.6;
     text-align: center;
     padding: 0 20px;
 }
 
 @keyframes avatar-float {
     0%, 100% {
-        transform: translateY(0);
+        transform: translateY(0) rotate(0deg);
     }
     50% {
-        transform: translateY(-15px);
+        transform: translateY(-20px) rotate(2deg);
     }
+}
+
+/* Avatar glow effect */
+.avatar-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120%;
+    height: 120%;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.3) 0%, transparent 70%);
+    border-radius: 50%;
+    z-index: -1;
+    animation: glow-pulse 3s ease-in-out infinite;
 }
 
 .hero-greeting {
@@ -310,11 +395,11 @@ body {
 }
 
 .hero-description {
-    font-size: 1.125rem;
-    margin-bottom: 2.5rem;
-    color: rgba(255, 255, 255, 0.85);
-    line-height: 1.75;
-    max-width: 600px;
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.9);
 }
 
 .hero-buttons {
@@ -335,14 +420,11 @@ body {
 }
 
 .btn-primary {
-    background-color: var(--primary-color);
-    color: white;
-    border: 2px solid var(--primary-color);
+    background-color: white;
+    color: var(--primary-color);
 }
 
 .btn-primary:hover {
-    background-color: var(--primary-dark);
-    border-color: var(--primary-dark);
     transform: translateY(-2px);
     box-shadow: var(--shadow-lg);
 }
@@ -350,12 +432,12 @@ body {
 .btn-secondary {
     background-color: transparent;
     color: white;
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    border: 2px solid white;
 }
 
 .btn-secondary:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.5);
+    background-color: white;
+    color: #1a0b2e;
     transform: translateY(-2px);
 }
 
@@ -365,23 +447,23 @@ body {
 }
 
 .social-link {
-    width: 44px;
-    height: 44px;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.2);
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
     text-decoration: none;
     transition: var(--transition);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
 }
 
 .social-link:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-    border-color: rgba(255, 255, 255, 0.4);
-    transform: translateY(-2px);
+    background-color: white;
+    color: var(--primary-color);
+    transform: translateY(-3px);
 }
 
 
@@ -846,31 +928,21 @@ section {
 /* Responsive Design */
 @media (max-width: 968px) {
     .hero-container {
-        grid-template-columns: 1fr;
-        gap: 3rem;
+        flex-direction: column;
         text-align: center;
     }
 
-    .hero-content {
-        text-align: center;
+    .hero-image {
+        display: none;
     }
 
-    .hero-description {
-        max-width: 100%;
+    .name-glow {
+        font-size: 4rem;
+        letter-spacing: 4px;
     }
 
-    .avatar-wrapper {
-        max-width: 400px;
-        height: 400px;
-        margin: 0 auto;
-    }
-
-    .hero-name {
-        font-size: 3.5rem;
-    }
-
-    .hero-role {
-        font-size: 1.25rem;
+    .title-text-large {
+        font-size: 1.8rem;
     }
 
     .about-content {
@@ -917,16 +989,19 @@ section {
         height: 300px;
     }
 
-    .hero-name {
-        font-size: 2.75rem;
+    .name-glow {
+        font-size: 3rem;
+        letter-spacing: 3px;
     }
 
-    .hero-role {
-        font-size: 1.125rem;
+    .title-text-large {
+        font-size: 1.5rem;
+        letter-spacing: 2px;
     }
 
-    .hero-greeting {
+    .title-text-small {
         font-size: 1rem;
+        letter-spacing: 2px;
     }
 
     .hero-buttons {
@@ -946,7 +1021,7 @@ section {
 
 @media (max-width: 480px) {
     .hero {
-        padding: 100px 20px 50px;
+        padding: 80px 20px 30px;
     }
 
     .avatar-wrapper {
@@ -954,16 +1029,14 @@ section {
         height: 250px;
     }
 
-    .hero-name {
-        font-size: 2.25rem;
+    .name-glow {
+        font-size: 2.5rem;
+        letter-spacing: 2px;
     }
 
-    .hero-role {
-        font-size: 1rem;
-    }
-
-    .hero-description {
-        font-size: 1rem;
+    .title-text-large {
+        font-size: 1.2rem;
+        letter-spacing: 1px;
     }
 
     .btn {
