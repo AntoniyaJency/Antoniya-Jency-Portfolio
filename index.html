@@ -44,16 +44,18 @@
 
     <!-- Hero Section -->
     <section id="home" class="hero">
+        <div class="particles" id="particles"></div>
         <div class="hero-container">
             <div class="hero-content">
                 <h1 class="hero-title">
-                    <span class="greeting">Hi, I'm</span>
-                    <span class="name">Antoniya Jency</span>
-                    <span class="title-text">Web Developer & Designer</span>
+                    <span class="hero-greeting">Hello, I'm</span>
+                    <span class="hero-name">Antoniya Jency</span>
+                    <span class="hero-role">Software Developer</span>
                 </h1>
                 <p class="hero-description">
-                    I create beautiful, functional, and user-friendly web experiences.
-                    Passionate about turning ideas into reality through code.
+                    I specialize in building scalable, efficient software solutions that drive business growth. 
+                    With expertise in modern development practices, I transform complex requirements into elegant, 
+                    maintainable code.
                 </p>
                 <div class="hero-buttons">
                     <a href="#projects" class="btn btn-primary">View My Work</a>
@@ -74,12 +76,26 @@
                     </a>
                 </div>
             </div>
-            <div class="hero-image">
-                <div class="image-wrapper">
-                    <div class="floating-shapes">
-                        <div class="shape shape-1"></div>
-                        <div class="shape shape-2"></div>
-                        <div class="shape shape-3"></div>
+            <!-- Animated Avatar Container -->
+            <div class="hero-avatar-container">
+                <div class="avatar-wrapper">
+                    <!-- Option 1: Image/GIF Avatar (Replace src with your avatar path) -->
+                    <img src="avatar.gif" alt="Antoniya Jency Avatar" class="avatar-image" id="avatar-image" style="display: none;">
+                    
+                    <!-- Option 2: Lottie Animation (Uncomment and add your Lottie JSON URL) -->
+                    <!-- <div id="lottie-avatar" style="display: none;"></div> -->
+                    
+                    <!-- Option 3: Ready Player Me / 3D Model Viewer (Uncomment and add your model URL) -->
+                    <!-- <model-viewer src="avatar.glb" alt="3D Avatar" class="avatar-3d" id="avatar-3d" style="display: none;" 
+                        camera-controls auto-rotate ar shadow-intensity="1"></model-viewer> -->
+                    
+                    <!-- Option 4: Animated SVG (Place your SVG code here) -->
+                    <!-- <div class="avatar-svg" id="avatar-svg" style="display: none;"></div> -->
+                    
+                    <!-- Placeholder - Remove this when you add your avatar -->
+                    <div class="avatar-placeholder" id="avatar-placeholder">
+                        <i class="fas fa-user-astronaut"></i>
+                        <p>Add your animated avatar here</p>
                     </div>
                 </div>
             </div>
