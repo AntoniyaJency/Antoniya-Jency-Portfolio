@@ -45,27 +45,34 @@ body {
 /* Navigation */
 .navbar {
     position: fixed;
-    top: 0;
-    width: 100%;
-    background-color: rgba(12, 0, 16, 0.95);
-    backdrop-filter: blur(10px);
-    box-shadow: var(--shadow-sm);
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 40px);
+    max-width: 1200px;
+    background-color: rgba(12, 0, 16, 0.8);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.05);
     z-index: 1000;
     transition: var(--transition);
+    padding: 0.75rem 2rem;
 }
 
 .navbar.scrolled {
-    box-shadow: var(--shadow-md);
+    top: 10px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1);
+    background-color: rgba(12, 0, 16, 0.95);
 }
 
 .nav-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 1rem 20px;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    
+    margin: 0;
+    padding: 0;
 }
 
 .nav-logo a {
@@ -128,7 +135,7 @@ body {
 .bar {
     width: 25px;
     height: 3px;
-    background-color: var(--text-dark);
+    background-color: white;
     transition: var(--transition);
     border-radius: 3px;
 }
@@ -207,6 +214,17 @@ linear-gradient(135deg, #1a0b2e 0%, #2d1b4e 50%, #4a2c6a 100%);
     color: white;
     text-align: center;
     width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.hero-title {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .title-text-small {
@@ -220,8 +238,8 @@ linear-gradient(135deg, #1a0b2e 0%, #2d1b4e 50%, #4a2c6a 100%);
 }
 
 .name-glow {
-    display: block;
-    font-size: 11rem;
+    display: inline-block;
+    font-size: 12rem;
     font-weight: 900;
     margin-bottom: 1rem;
     color: white;
@@ -233,8 +251,10 @@ linear-gradient(135deg, #1a0b2e 0%, #2d1b4e 50%, #4a2c6a 100%);
         0 0 70px rgba(139, 92, 246, 0.2);
     letter-spacing: 5px;
     text-transform: uppercase;
-    animation: glow-pulse 3s ease-in-out infinite;
+    animation: glow-pulse 3s ease-in-out infinite, slide-right-to-left 25s linear infinite;
     position: relative;
+    white-space: nowrap;
+    will-change: transform;
 }
 
 .name-glow::before {
@@ -265,6 +285,15 @@ linear-gradient(135deg, #1a0b2e 0%, #2d1b4e 50%, #4a2c6a 100%);
             0 0 35px rgba(139, 92, 246, 0.6),
             0 0 50px rgba(139, 92, 246, 0.4),
             0 0 80px rgba(139, 92, 246, 0.3);
+    }
+}
+
+@keyframes slide-right-to-left {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(-100%);
     }
 }
 
@@ -356,7 +385,7 @@ linear-gradient(135deg, #1a0b2e 0%, #2d1b4e 50%, #4a2c6a 100%);
     }
 }
 
-/* Avatar glow effect */
+/* Avatar glow effect 
 .avatar-wrapper::before {
     content: '';
     position: absolute;
@@ -370,7 +399,7 @@ linear-gradient(135deg, #1a0b2e 0%, #2d1b4e 50%, #4a2c6a 100%);
     z-index: -1;
     animation: glow-pulse 3s ease-in-out infinite;
 }
-
+*/
 .hero-greeting {
     display: block;
     font-size: 1.125rem;
@@ -958,21 +987,36 @@ section {
         grid-template-columns: 1fr;
     }
 
+    .navbar {
+        width: calc(100% - 20px);
+        top: 10px;
+        padding: 0.75rem 1.5rem;
+    }
+
     .nav-menu {
         position: fixed;
         left: -100%;
-        top: 70px;
+        top: 80px;
         flex-direction: column;
-        background-color: white;
-        width: 100%;
+        background-color: rgba(12, 0, 16, 0.95);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        width: calc(100% - 40px);
+        max-width: 500px;
+        left: 50%;
+        transform: translateX(-50%);
         text-align: center;
         transition: var(--transition);
-        box-shadow: var(--shadow-lg);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         padding: 2rem 0;
+        opacity: 0;
+        visibility: hidden;
     }
 
     .nav-menu.active {
-        left: 0;
+        opacity: 1;
+        visibility: visible;
     }
 
     .hamburger {
@@ -1025,6 +1069,13 @@ section {
 }
 
 @media (max-width: 480px) {
+    .navbar {
+        width: calc(100% - 20px);
+        top: 10px;
+        padding: 0.5rem 1rem;
+        border-radius: 30px;
+    }
+
     .hero {
         padding: 80px 20px 30px;
     }
