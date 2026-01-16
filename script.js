@@ -317,7 +317,15 @@ window.addEventListener('load', () => {
     console.log("Page loaded, initializing animations...");
     
     createParticles();
-    typeWriter();
+    
+    // Check if typing elements exist before initializing
+    const typedTextElement = document.querySelector('.typed-text');
+    if (typedTextElement) {
+        typeWriter();
+    } else {
+        console.log("Typed text element not found, skipping typeWriter");
+    }
+    
     createFloatingCode();
     setupScrollAnimations();
     
@@ -326,12 +334,119 @@ window.addEventListener('load', () => {
         console.log("Setting up about section animations...");
         setupAboutAnimations();
     }, 100);
+    
+    // Initialize EmailJS
+    initializeEmailJS();
 });
 
 // Also setup on DOM content loaded as backup
 document.addEventListener('DOMContentLoaded', () => {
     console.log("DOM content loaded");
 });
+
+// EmailJS Configuration
+function initializeEmailJS() {
+    // Check if EmailJS is loaded
+    if (typeof window.emailjs === 'undefined') {
+        console.error('EmailJS not loaded!');
+        return;
+    }
+    
+    // Initialize EmailJS with your public key
+    window.emailjs.init("pr-AUyHSCD6hZ-LvA"); // You'll need to replace this
+    
+    // Setup form submission
+    const contactForm = document.getElementById('contact-form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', handleFormSubmit);
+    }
+}
+
+// Handle form submission
+async function handleFormSubmit(event) {
+    event.preventDefault();
+    
+    const form = event.target;
+    const submitButton = form.querySelector('button[type="submit"]');
+    const originalText = submitButton.textContent;
+    
+    // Show loading state
+    submitButton.textContent = 'Sending...';
+    submitButton.disabled = true;
+    
+    // Get form data
+    const formData = {
+        from_name: form.name.value,
+        from_email: form.email.value,
+        subject: form.subject.value,
+        message: form.message.value,
+        to_email: 'antoniyajency.27csa@licet.ac.in'
+    };
+    
+    try {
+        // Send email using EmailJS
+        const response = await window.emailjs.send(
+            'service_gdvhuxk',  // You'll need to replace this
+            'template_f0v46bg', // You'll need to replace this
+            formData
+        );
+        
+        console.log('Email sent successfully!', response);
+        showSuccessMessage();
+        form.reset();
+        
+    } catch (error) {
+        console.error('Failed to send email:', error);
+        showErrorMessage();
+    } finally {
+        // Reset button state
+        submitButton.textContent = originalText;
+        submitButton.disabled = false;
+    }
+}
+
+// Show success message
+function showSuccessMessage() {
+    const message = document.createElement('div');
+    message.className = 'form-message success';
+    message.textContent = '✅ Message sent successfully! I\'ll get back to you soon.';
+    
+    insertMessage(message);
+    setTimeout(() => removeMessage(message), 5000);
+}
+
+// Show error message
+function showErrorMessage() {
+    const message = document.createElement('div');
+    message.className = 'form-message error';
+    message.textContent = '❌ Failed to send message. Please try again or contact directly.';
+    
+    insertMessage(message);
+    setTimeout(() => removeMessage(message), 5000);
+}
+
+// Insert message into form
+function insertMessage(message) {
+    const form = document.getElementById('contact-form');
+    const submitButton = form.querySelector('button[type="submit"]');
+    
+    message.style.cssText = `
+        margin-top: 15px;
+        padding: 12px 20px;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        text-align: center;
+        animation: slideInUp 0.3s ease;
+    `;
+    
+    submitButton.parentNode.insertBefore(message, submitButton.nextSibling);
+}
+
+// Remove message
+function removeMessage(message) {
+    message.style.animation = 'slideOutDown 0.3s ease';
+    setTimeout(() => message.remove(), 300);
+}
 
 // Example: Uncomment and configure one of these based on your avatar type
 // window.addEventListener('load', () => {
@@ -588,7 +703,7 @@ window.addEventListener('scroll', () => {
 });
 
 // Typing effect for hero title (optional enhancement)
-function typeWriter(element, text, speed = 100) {
+function typeWriterHero(element, text, speed = 100) {
     let i = 0;
     element.textContent = '';
     
