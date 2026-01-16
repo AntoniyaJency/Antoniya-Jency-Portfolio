@@ -1450,6 +1450,7 @@ section {
     height: 100%;
     z-index: 1;
     border: none;
+    pointer-events: none;
 }
 
 .spline-background {
@@ -1471,12 +1472,13 @@ section {
 .contact .container {
     position: relative;
     z-index: 10;
-    background: rgba(10, 10, 10, 0.7);
-    backdrop-filter: blur(10px);
+    background: rgba(10, 10, 10, 0.85);
     border-radius: 20px;
     padding: 40px;
     margin: 0 auto;
     max-width: 1200px;
+    
+    border: 1px solid rgba(139, 92, 246, 0.2);
 }
 
 .contact .section-title {
@@ -1578,6 +1580,53 @@ section {
 .form-group textarea {
     resize: vertical;
     min-height: 120px;
+}
+
+/* Form Messages */
+.form-message {
+    margin-top: 15px;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    text-align: center;
+    animation: slideInUp 0.3s ease;
+    font-weight: 500;
+}
+
+.form-message.success {
+    background: rgba(34, 197, 94, 0.2);
+    border: 1px solid rgba(34, 197, 94, 0.5);
+    color: #22c55e;
+    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.15);
+}
+
+.form-message.error {
+    background: rgba(239, 68, 68, 0.2);
+    border: 1px solid rgba(239, 68, 68, 0.5);
+    color: #ef4444;
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.15);
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideOutDown {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(20px);
+    }
 }
 
 /* Footer */
