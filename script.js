@@ -110,446 +110,31 @@ function createFloatingCode() {
     });
 }
 
-// 3D MacBook with Three.js
-class MacBook3D {
-    constructor() {
-        this.scene = null;
-        this.camera = null;
-        this.renderer = null;
-        this.macbookModel = null;
-        this.isOpen = false;
-        this.targetRotation = { x: -75, y: 0 }; // Start at -75 degrees
-        this.currentRotation = { x: -75, y: 0 };
-        this.init();
-    }
-
-    init() {
-        console.log("Initializing 3D MacBook...");
-        this.setupScene();
-        this.loadModel();
-        this.animate();
-    }
-
-    setupScene() {
-        const container = document.getElementById('macbook-canvas');
-        if (!container) return;
-
-        // Scene setup
-        this.scene = new THREE.Scene();
-        this.scene.background = new THREE.Color(0x0a0a0a);
-
-        // Camera setup
-        this.camera = new THREE.PerspectiveCamera(
-            45,
-            container.clientWidth / container.clientHeight,
-            0.1,
-            1000
-        );
-        this.camera.position.set(0, 5, 15);
-        this.camera.lookAt(0, 0, 0);
-
-        // Renderer setup
-        this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-        this.renderer.setSize(container.clientWidth, container.clientHeight);
-        this.renderer.setPixelRatio(window.devicePixelRatio);
-        this.renderer.shadowMap.enabled = true;
-        this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-        container.appendChild(this.renderer.domElement);
-
-        // Lighting
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
-        this.scene.add(ambientLight);
-
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-        directionalLight.position.set(5, 10, 5);
-        directionalLight.castShadow = true;
-        directionalLight.shadow.camera.near = 0.1;
-        directionalLight.shadow.camera.far = 50;
-        directionalLight.shadow.camera.left = -10;
-        directionalLight.shadow.camera.right = 10;
-        directionalLight.shadow.camera.top = 10;
-        directionalLight.shadow.camera.bottom = -10;
-        this.scene.add(directionalLight);
-
-        const pointLight = new THREE.PointLight(0x8b5cf6, 0.5, 100);
-        pointLight.position.set(0, 5, 5);
-        this.scene.add(pointLight);
-
-        // Handle resize
-        window.addEventListener('resize', () => this.onWindowResize());
-    }
-
-    loadModel() {
-        console.log("Starting to load 3D model...");
-        
-        // Check if GLTFLoader is available
-        if (typeof THREE.GLTFLoader === 'undefined') {
-            console.error("GLTFLoader not found!");
-            const loadingIndicator = document.querySelector('.loading-indicator');
-            if (loadingIndicator) {
-                loadingIndicator.innerHTML = '<p>Error: GLTFLoader not loaded</p>';
-            }
-            return;
-        }
-        
-        const loader = new THREE.GLTFLoader();
-        
-        loader.load(
-            'macbook_pro_m3_16_inch_2024.glb',
-            (gltf) => {
-                console.log("MacBook model loaded successfully", gltf);
-                this.macbookModel = gltf.scene;
-                
-                // Find the main MacBook mesh and adjust positioning
-                let macbookMesh = null;
-                this.macbookModel.traverse((child) => {
-                    if (child.isMesh) {
-                        child.castShadow = true;
-                        child.receiveShadow = true;
-                        if (!macbookMesh) {
-                            macbookMesh = child;
-                        }
-                    }
-                });
-                
-                // Position and scale the model properly
-                this.macbookModel.position.set(0, -2, 0); // Lower the position
-                this.macbookModel.scale.set(0.5, 0.5, 0.5); // Smaller scale
-                
-                // Apply initial rotation (closed state - more dramatic)
-                this.macbookModel.rotation.x = THREE.MathUtils.degToRad(-75);
-                this.macbookModel.rotation.z = THREE.MathUtils.degToRad(0);
-                
-                // Center the model
-                const box = new THREE.Box3().setFromObject(this.macbookModel);
-                const center = box.getCenter(new THREE.Vector3());
-                this.macbookModel.position.sub(center);
-                
-                this.scene.add(this.macbookModel);
-                
-                // Adjust camera to get better view
-                this.camera.position.set(0, 2, 8);
-                this.camera.lookAt(0, 0, 0);
-                
-                // Hide loading indicator
-                const loadingIndicator = document.querySelector('.loading-indicator');
-                if (loadingIndicator) {
-                    loadingIndicator.style.display = 'none';
-                }
-                
-                console.log("3D MacBook setup complete!");
-                console.log("Model position:", this.macbookModel.position);
-                console.log("Model rotation:", this.macbookModel.rotation);
-            },
-            (progress) => {
-                const percent = (progress.loaded / progress.total * 100).toFixed(1);
-                console.log("Loading progress:", percent + '%');
-                const loadingIndicator = document.querySelector('.loading-indicator p');
-                if (loadingIndicator) {
-                    loadingIndicator.textContent = `Loading MacBook... ${percent}%`;
-                }
-            },
-            (error) => {
-                console.error("Error loading MacBook model:", error);
-                const loadingIndicator = document.querySelector('.loading-indicator');
-                if (loadingIndicator) {
-                    loadingIndicator.innerHTML = '<p>Error loading 3D model</p><p>Check console for details</p>';
-                }
-            }
-        );
-    }
-
-    open() {
-        if (!this.macbookModel || this.isOpen) return;
-        
-        console.log("Opening MacBook 3D model");
-        this.isOpen = true;
-        this.targetRotation.x = 0; // Fully open (flat)
-        
-        // Show content overlay
-        const overlay = document.querySelector('.screen-content-overlay');
-        if (overlay) {
-            setTimeout(() => {
-                overlay.classList.add('visible');
-            }, 800);
-        }
-    }
-
-    close() {
-        if (!this.macbookModel || !this.isOpen) return;
-        
-        console.log("Closing MacBook 3D model");
-        this.isOpen = false;
-        this.targetRotation.x = -75; // Closed angle
-        
-        // Hide content overlay
-        const overlay = document.querySelector('.screen-content-overlay');
-        if (overlay) {
-            overlay.classList.remove('visible');
-        }
-    }
-
-    animate() {
-        requestAnimationFrame(() => this.animate());
-        
-        if (this.macbookModel) {
-            // Smooth rotation animation
-            this.currentRotation.x += (this.targetRotation.x - this.currentRotation.x) * 0.1;
-            this.currentRotation.y += (this.targetRotation.y - this.currentRotation.y) * 0.1;
-            
-            this.macbookModel.rotation.x = THREE.MathUtils.degToRad(this.currentRotation.x);
-            this.macbookModel.rotation.y = THREE.MathUtils.degToRad(this.currentRotation.y);
-            
-            // Add subtle rotation when open
-            if (this.isOpen) {
-                this.targetRotation.y = Math.sin(Date.now() * 0.0005) * 2;
-            } else {
-                this.targetRotation.y = 0;
-            }
-        }
-        
-        if (this.renderer && this.scene && this.camera) {
-            this.renderer.render(this.scene, this.camera);
-        }
-    }
-
-    onWindowResize() {
-        const container = document.getElementById('macbook-canvas');
-        if (!container || !this.camera || !this.renderer) return;
-        
-        this.camera.aspect = container.clientWidth / container.clientHeight;
-        this.camera.updateProjectionMatrix();
-        this.renderer.setSize(container.clientWidth, container.clientHeight);
-    }
-}
-
-// GSAP MacBook 3D Animations
-function setupMacbookAnimations() {
-    console.log("Setting up 3D MacBook animations...");
+// About Section Animations
+function setupAboutAnimations() {
+    console.log("Setting up about section animations...");
     
-    // Check if Three.js is loaded
-    if (typeof THREE === 'undefined') {
-        console.error("Three.js not loaded!");
-        setupFallbackMacBook();
-        return;
-    }
-    
-    const macbook3D = new MacBook3D();
-    
-    // Add timeout fallback for model loading
-    setTimeout(() => {
-        if (!macbook3D.macbookModel) {
-            console.warn("3D model not loaded after 10 seconds, showing fallback");
-            setupFallbackMacBook();
-        }
-    }, 10000);
-    
-    // Create ScrollTrigger for MacBook animations
+    // Create ScrollTrigger for about section
     ScrollTrigger.create({
         trigger: "#about",
         start: "top 60%",
         end: "bottom 40%",
         onEnter: () => {
-            console.log("Entering about section - opening 3D MacBook");
-            if (macbook3D.macbookModel) {
-                macbook3D.open();
-            } else {
-                openFallbackMacBook();
-            }
-            animateContent();
-        },
-        onLeave: () => {
-            console.log("Leaving about section - closing 3D MacBook");
-            if (macbook3D.macbookModel) {
-                macbook3D.close();
-            } else {
-                closeFallbackMacBook();
-            }
+            console.log("Entering about section");
+            animateAboutContent();
         },
         onEnterBack: () => {
-            console.log("Re-entering about section - re-opening 3D MacBook");
-            if (macbook3D.macbookModel) {
-                macbook3D.open();
-            } else {
-                openFallbackMacBook();
-            }
-            animateContent();
-        },
-        onLeaveBack: () => {
-            console.log("Re-leaving about section - re-closing 3D MacBook");
-            if (macbook3D.macbookModel) {
-                macbook3D.close();
-            } else {
-                closeFallbackMacBook();
-            }
+            console.log("Re-entering about section");
+            animateAboutContent();
         }
     });
-
-    console.log("3D MacBook ScrollTrigger created successfully");
+    
+    console.log("About section animations setup complete");
 }
 
-// Fallback 2D MacBook
-function setupFallbackMacBook() {
-    console.log("Setting up fallback 2D MacBook");
-    
-    const container = document.getElementById('macbook-canvas');
-    if (!container) {
-        console.error("macbook-canvas container not found!");
-        return;
-    }
-    
-    console.log("Container found:", container);
-    
-    // Hide loading indicator
-    const loadingIndicator = document.querySelector('.loading-indicator');
-    if (loadingIndicator) {
-        loadingIndicator.style.display = 'none';
-    }
-    
-    // Create fallback MacBook HTML
-    container.innerHTML = `
-        <div class="macbook-fallback">
-            <div class="macbook-screen-fallback">
-                <div class="screen-bezel"></div>
-                <div class="webcam-indicator"></div>
-            </div>
-            <div class="macbook-base-fallback">
-                <div class="keyboard-area"></div>
-                <div class="trackpad-area"></div>
-            </div>
-        </div>
-    `;
-    
-    console.log("Fallback HTML added to container");
-    
-    // Add CSS for fallback
-    const style = document.createElement('style');
-    style.textContent = `
-        .macbook-fallback {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            transform-style: preserve-3d;
-            transform: rotateX(-85deg) scale(0.8);
-            transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-            background: linear-gradient(45deg, #2a2a2a, #1a1a1a);
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        }
-        
-        .macbook-fallback.open {
-            transform: rotateX(0deg) scale(1);
-        }
-        
-        .macbook-screen-fallback {
-            width: 90%;
-            height: 75%;
-            background: #000;
-            border: 4px solid #2a2a2a;
-            border-radius: 15px 15px 0 0;
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            box-shadow: 0 0 50px rgba(139, 92, 246, 0.3);
-            overflow: hidden;
-        }
-        
-        .screen-bezel {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 40px;
-            background: linear-gradient(to bottom, #3a3a3a, #1a1a1a);
-            border-radius: 15px 15px 0 0;
-        }
-        
-        .webcam-indicator {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            width: 6px;
-            height: 6px;
-            background: #8b5cf6;
-            border-radius: 50%;
-            box-shadow: 0 0 10px #8b5cf6;
-        }
-        
-        .macbook-base-fallback {
-            width: 95%;
-            height: 25px;
-            background: linear-gradient(to bottom, #2a2a2a, #1a1a1a);
-            border: 4px solid #2a2a2a;
-            border-top: none;
-            border-radius: 0 0 25px 25px;
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-        
-        .keyboard-area {
-            position: absolute;
-            top: 5px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80%;
-            height: 8px;
-            background: repeating-linear-gradient(
-                to right,
-                #333,
-                #333 8px,
-                #444 8px,
-                #444 10px
-            );
-            border-radius: 2px;
-            opacity: 0.7;
-        }
-        
-        .trackpad-area {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 120px;
-            height: 80px;
-            background: linear-gradient(135deg, #4a4a4a, #3a3a3a);
-            border: 2px solid #555;
-            border-radius: 10px;
-        }
-    `;
-    document.head.appendChild(style);
-    
-    // Store reference for animations
-    window.fallbackMacBook = container.querySelector('.macbook-fallback');
-    
-    console.log("Fallback MacBook created:", window.fallbackMacBook);
-    
-    // Test immediate open
-    setTimeout(() => {
-        console.log("Testing open animation");
-        if (window.fallbackMacBook) {
-            window.fallbackMacBook.classList.add('open');
-        }
-    }, 2000);
-}
-
-function openFallbackMacBook() {
-    if (window.fallbackMacBook) {
-        window.fallbackMacBook.classList.add('open');
-    }
-}
-
-function closeFallbackMacBook() {
-    if (window.fallbackMacBook) {
-        window.fallbackMacBook.classList.remove('open');
-    }
-}
-
-// Animate content inside MacBook
-function animateContent() {
-    console.log("Animating content inside MacBook...");
+// Animate about section content
+function animateAboutContent() {
+    console.log("Animating about section content...");
     
     const cards = document.querySelectorAll('.about-card');
     const timelineItems = document.querySelectorAll('.timeline-item');
@@ -557,81 +142,63 @@ function animateContent() {
 
     console.log("Found elements:", { cards: cards.length, timelineItems: timelineItems.length, statCircles: statCircles.length });
 
-    // Animate typing intro
-    const typingIntro = document.querySelector('.typing-intro');
-    if (typingIntro) {
-        gsap.fromTo(typingIntro,
-            {
-                y: -30,
-                opacity: 0
-            },
-            {
-                y: 0,
-                opacity: 1,
-                duration: 0.8,
-                ease: "power3.out",
-                delay: 0.3
-            }
-        );
-    }
-
-    // Animate cards
-    if (cards.length > 0) {
-        gsap.fromTo(cards, 
-            {
-                y: 50,
-                opacity: 0,
-                scale: 0.8
-            },
-            {
-                y: 0,
-                opacity: 1,
-                scale: 1,
-                duration: 0.8,
-                stagger: 0.2,
-                ease: "back.out(1.7)",
-                delay: 0.5
-            }
-        );
-    }
+    // Animate cards with stagger
+    gsap.fromTo(cards, 
+        {
+            opacity: 0,
+            y: 50,
+            scale: 0.8
+        },
+        {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.8,
+            stagger: 0.2,
+            ease: "power3.out"
+        }
+    );
 
     // Animate timeline items
-    if (timelineItems.length > 0) {
-        gsap.fromTo(timelineItems,
-            {
-                x: -50,
-                opacity: 0
-            },
-            {
-                x: 0,
-                opacity: 1,
-                duration: 0.6,
-                stagger: 0.15,
-                ease: "power2.out",
-                delay: 0.8
-            }
-        );
-    }
+    gsap.fromTo(timelineItems,
+        {
+            opacity: 0,
+            x: -50
+        },
+        {
+            opacity: 1,
+            x: 0,
+            duration: 0.6,
+            stagger: 0.15,
+            delay: 0.3,
+            ease: "power2.out"
+        }
+    );
 
     // Animate stat circles
-    if (statCircles.length > 0) {
-        gsap.fromTo(statCircles,
-            {
-                scale: 0,
-                rotation: -180
-            },
-            {
-                scale: 1,
-                rotation: 0,
-                duration: 1,
-                stagger: 0.1,
-                ease: "elastic.out(1, 0.5)",
-                delay: 1.2
-            }
-        );
-    }
+    gsap.fromTo(statCircles,
+        {
+            opacity: 0,
+            scale: 0.5
+        },
+        {
+            opacity: 1,
+            scale: 1,
+            duration: 0.8,
+            stagger: 0.1,
+            delay: 0.6,
+            ease: "back.out(1.7)"
+        }
+    );
 
-    console.log("Content animation setup complete");
+    // Animate stat numbers
+    statCircles.forEach(circle => {
+        const number = circle.querySelector('.stat-number');
+        if (number) {
+            const target = parseInt(number.getAttribute('data-target'));
+            animateCounter(number, 0, target, 2000);
+        }
+    });
 }
 
 // Intersection Observer for Animations
@@ -754,27 +321,16 @@ window.addEventListener('load', () => {
     createFloatingCode();
     setupScrollAnimations();
     
-    // Immediate test - add fallback right away
-    console.log("Immediately setting up fallback MacBook for testing");
-    setupFallbackMacBook();
-    
-    // Wait a bit for DOM to be ready, then setup GSAP
+    // Initialize about section animations
     setTimeout(() => {
-        console.log("Setting up GSAP animations...");
-        setupMacbookAnimations();
+        console.log("Setting up about section animations...");
+        setupAboutAnimations();
     }, 100);
 });
 
 // Also setup on DOM content loaded as backup
 document.addEventListener('DOMContentLoaded', () => {
     console.log("DOM content loaded");
-    // Test fallback immediately
-    setTimeout(() => {
-        if (!window.fallbackMacBook) {
-            console.log("No fallback found, creating it now");
-            setupFallbackMacBook();
-        }
-    }, 1000);
 });
 
 // Example: Uncomment and configure one of these based on your avatar type

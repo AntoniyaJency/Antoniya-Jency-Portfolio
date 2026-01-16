@@ -629,84 +629,10 @@ section {
     }
 }
 
-.macbook-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 80vh;
-    perspective: 2000px;
-    margin-top: 50px;
-    position: relative;
-}
-
-.macbook-3d {
-    width: 100%;
-    height: 600px;
-    position: relative;
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
-}
-
-.loading-indicator {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    color: #8b5cf6;
-    z-index: 10;
-}
-
-.loading-spinner {
-    width: 50px;
-    height: 50px;
-    border: 3px solid rgba(139, 92, 246, 0.3);
-    border-top: 3px solid #8b5cf6;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    margin: 0 auto 15px;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-.screen-content-overlay {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 85%;
-    height: 75%;
-    background: rgba(0, 0, 0, 0.9);
-    border-radius: 10px;
-    padding: 30px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    opacity: 0;
-    pointer-events: none;
-    transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 5;
-}
-
-.screen-content-overlay.visible {
-    opacity: 1;
-    pointer-events: all;
-}
-
-.screen-content-overlay::-webkit-scrollbar {
-    width: 4px;
-}
-
-.screen-content-overlay::-webkit-scrollbar-track {
-    background: rgba(139, 92, 246, 0.1);
-}
-
-.screen-content-overlay::-webkit-scrollbar-thumb {
-    background: linear-gradient(to bottom, #8b5cf6, #7c3aed);
-    border-radius: 2px;
+.about-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
 .about-unique {
@@ -1508,10 +1434,61 @@ section {
 
 
 /* Contact Section */
+.contact {
+    position: relative;
+    padding: 100px 0;
+    background: #0a0a0a;
+    overflow: hidden;
+    min-height: 100vh;
+}
+
+.contact iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    border: none;
+}
+
+.spline-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    display: none; /* Hide canvas since we're using iframe */
+}
+
+.spline-background #contact-canvas {
+    width: 100%;
+    height: 100%;
+    outline: none;
+}
+
+.contact .container {
+    position: relative;
+    z-index: 10;
+    background: rgba(10, 10, 10, 0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 40px;
+    margin: 0 auto;
+    max-width: 1200px;
+}
+
+.contact .section-title {
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
 .contact-subtitle {
     text-align: center;
     font-size: 1.1rem;
-    color: var(--text-light);
+    color: #b8b8b8;
     margin-bottom: 3rem;
     max-width: 600px;
     margin-left: auto;
@@ -1540,25 +1517,25 @@ section {
     width: 56px;
     height: 56px;
     border-radius: 12px;
-    background: var(--primary-color);
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
     font-size: 1.375rem;
     flex-shrink: 0;
-    box-shadow: var(--shadow-sm);
+    box-shadow: 0 4px 20px rgba(139, 92, 246, 0.3);
 }
 
 .contact-details h3 {
     font-size: 1.1rem;
     font-weight: 600;
     margin-bottom: 0.5rem;
-    color: var(--text-dark);
+    color: #ffffff;
 }
 
 .contact-details p {
-    color: var(--text-light);
+    color: #b8b8b8;
 }
 
 .contact-form {
@@ -1575,20 +1552,27 @@ section {
 .form-group textarea {
     width: 100%;
     padding: 0.875rem 1rem;
-    border: 1px solid var(--border-color);
+    border: 1px solid rgba(139, 92, 246, 0.3);
     border-radius: 8px;
     font-family: 'Poppins', sans-serif;
     font-size: 0.9375rem;
     transition: var(--transition);
-    background-color: var(--bg-white);
-    color: var(--text-dark);
+    background-color: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+    backdrop-filter: blur(5px);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #888888;
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    border-color: #8b5cf6;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+    background-color: rgba(255, 255, 255, 0.12);
 }
 
 .form-group textarea {
