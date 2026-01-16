@@ -80,7 +80,7 @@ body {
 .nav-logo a {
     font-size: 1.5rem;
     font-weight: 700;
-    color: var(--primary-color);
+    color: rgb(114, 4, 198);
     text-decoration: none;
     transition: var(--transition);
 }
@@ -258,7 +258,7 @@ linear-gradient(135deg, #1a0b2e 0%, #2d1b4e 50%, #4a2c6a 100%);
         0 0 20px rgba(139, 92, 246, 0.6),
         0 0 30px rgba(139, 92, 246, 0.4),
         0 0 40px rgba(139, 92, 246, 0.3),
-        0 0 70px rgba(139, 92, 246, 0.2);
+        0 0 70px rgba(23, 15, 42, 0.2);
     letter-spacing: 5px;
     text-transform: uppercase;
     animation: glow-pulse 4s ease-in-out infinite, slide-right-to-left 15s linear infinite;
@@ -286,7 +286,7 @@ linear-gradient(135deg, #1a0b2e 0%, #2d1b4e 50%, #4a2c6a 100%);
 @keyframes glow-pulse {
     0%, 100% {
         text-shadow: 
-            0 0 10px rgba(139, 92, 246, 0.8),
+            0 0 10px rgba(131, 18, 211, 0.8),
             0 0 20px rgba(139, 92, 246, 0.6),
             0 0 30px rgba(139, 92, 246, 0.4),
             0 0 40px rgba(139, 92, 246, 0.3),
@@ -298,7 +298,7 @@ linear-gradient(135deg, #1a0b2e 0%, #2d1b4e 50%, #4a2c6a 100%);
             0 0 25px rgba(139, 92, 246, 0.8),
             0 0 35px rgba(139, 92, 246, 0.6),
             0 0 50px rgba(139, 92, 246, 0.4),
-            0 0 80px rgba(139, 92, 246, 0.3);
+            0 0 80px rgba(132, 2, 168, 0.141);
     }
 }
 
@@ -315,7 +315,7 @@ linear-gradient(135deg, #1a0b2e 0%, #2d1b4e 50%, #4a2c6a 100%);
     display: block;
     font-size: 2.5rem;
     font-weight: 600;
-    margin-bottom: 2rem;
+    margin-bottom: 0rem;
     opacity: 0.95;
     letter-spacing: 3px;
     text-transform: uppercase;
@@ -544,6 +544,7 @@ section {
     color: var(--text-dark);
     position: relative;
     letter-spacing: -0.5px;
+    color: white;
 }
 
 .section-title::after {
@@ -560,7 +561,10 @@ section {
 
 /* About Section */
 .about {
-    background-color: var(--bg-light);
+    background-color: black;
+    min-height: 100vh;   /* 👈 this is the key */
+    width: 100%;
+    color: white;
 }
 
 .about-content {
@@ -568,6 +572,7 @@ section {
     grid-template-columns: 1.5fr 1fr;
     gap: 4rem;
     align-items: center;
+color: white;
 }
 
 .about-text p {
@@ -575,6 +580,7 @@ section {
     color: var(--text-medium);
     margin-bottom: 1.5rem;
     line-height: 1.75;
+    color: white;
 }
 
 .about-stats {
