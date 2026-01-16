@@ -354,98 +354,6 @@ function initializeEmailJS() {
     
     // Initialize EmailJS with your public key
     window.emailjs.init("pr-AUyHSCD6hZ-LvA"); // You'll need to replace this
-    
-    // Setup form submission
-    const contactForm = document.getElementById('contact-form');
-    if (contactForm) {
-        contactForm.addEventListener('submit', handleFormSubmit);
-    }
-}
-
-// Handle form submission
-async function handleFormSubmit(event) {
-    event.preventDefault();
-    
-    const form = event.target;
-    const submitButton = form.querySelector('button[type="submit"]');
-    const originalText = submitButton.textContent;
-    
-    // Show loading state
-    submitButton.textContent = 'Sending...';
-    submitButton.disabled = true;
-    
-    // Get form data
-    const formData = {
-        from_name: form.name.value,
-        from_email: form.email.value,
-        subject: form.subject.value,
-        message: form.message.value,
-        to_email: 'antoniyajency.27csa@licet.ac.in'
-    };
-    
-    try {
-        // Send email using EmailJS
-        const response = await window.emailjs.send(
-            'service_gdvhuxk',  // You'll need to replace this
-            'template_f0v46bg', // You'll need to replace this
-            formData
-        );
-        
-        console.log('Email sent successfully!', response);
-        showSuccessMessage();
-        form.reset();
-        
-    } catch (error) {
-        console.error('Failed to send email:', error);
-        showErrorMessage();
-    } finally {
-        // Reset button state
-        submitButton.textContent = originalText;
-        submitButton.disabled = false;
-    }
-}
-
-// Show success message
-function showSuccessMessage() {
-    const message = document.createElement('div');
-    message.className = 'form-message success';
-    message.textContent = '✅ Message sent successfully! I\'ll get back to you soon.';
-    
-    insertMessage(message);
-    setTimeout(() => removeMessage(message), 5000);
-}
-
-// Show error message
-function showErrorMessage() {
-    const message = document.createElement('div');
-    message.className = 'form-message error';
-    message.textContent = '❌ Failed to send message. Please try again or contact directly.';
-    
-    insertMessage(message);
-    setTimeout(() => removeMessage(message), 5000);
-}
-
-// Insert message into form
-function insertMessage(message) {
-    const form = document.getElementById('contact-form');
-    const submitButton = form.querySelector('button[type="submit"]');
-    
-    message.style.cssText = `
-        margin-top: 15px;
-        padding: 12px 20px;
-        border-radius: 8px;
-        font-size: 0.9rem;
-        text-align: center;
-        animation: slideInUp 0.3s ease;
-    `;
-    
-    submitButton.parentNode.insertBefore(message, submitButton.nextSibling);
-}
-
-// Remove message
-function removeMessage(message) {
-    message.style.animation = 'slideOutDown 0.3s ease';
-    setTimeout(() => message.remove(), 300);
 }
 
 // Example: Uncomment and configure one of these based on your avatar type
@@ -618,24 +526,92 @@ if (skillsSection) {
 // Contact form handling
 const contactForm = document.getElementById('contact-form');
 
-contactForm.addEventListener('submit', (e) => {
+contactForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     
-    // Get form values
+    // Get form elements
+    const submitButton = contactForm.querySelector('button[type="submit"]');
+    const originalText = submitButton.textContent;
+    
+    // Prevent double submission
+    if (submitButton.disabled) {
+        return;
+    }
+    
+    // Show loading state
+    submitButton.textContent = 'Sending...';
+    submitButton.disabled = true;
+    
+    // Remove any existing messages
+    const existingMessages = contactForm.querySelectorAll('.form-message');
+    existingMessages.forEach(msg => msg.remove());
+    
+    // Get form data
     const formData = {
-        name: document.getElementById('name').value,
-        email: document.getElementById('email').value,
-        subject: document.getElementById('subject').value,
-        message: document.getElementById('message').value
+        from_name: contactForm.name.value,
+        from_email: contactForm.email.value,
+        subject: contactForm.subject.value,
+        message: contactForm.message.value,
+        to_email: 'antoniyajency.27csa@licet.ac.in'
     };
     
-    // Here you would typically send the data to a server
-    // For now, we'll just show a success message
-    showNotification('Message sent successfully! I\'ll get back to you soon.', 'success');
-    
-    // Reset form
-    contactForm.reset();
+    try {
+        // Send email using EmailJS
+        const response = await window.emailjs.send(
+            'service_gdvhuxk',  // Your service ID
+            'template_f0v46bg', // Your template ID
+            formData
+        );
+        
+        console.log('Email sent successfully!', response);
+        showSuccessMessage();
+        contactForm.reset();
+        
+    } catch (error) {
+        console.error('Failed to send email:', error);
+        showErrorMessage();
+    } finally {
+        // Reset button state after a delay
+        setTimeout(() => {
+            submitButton.textContent = originalText;
+            submitButton.disabled = false;
+        }, 2000);
+    }
 });
+
+// Show success message
+function showSuccessMessage() {
+    const message = document.createElement('div');
+    message.className = 'form-message success';
+    message.textContent = '✅ Message sent successfully! I\'ll get back to you soon.';
+    
+    insertMessage(message);
+    setTimeout(() => removeMessage(message), 5000);
+}
+
+// Show error message
+function showErrorMessage() {
+    const message = document.createElement('div');
+    message.className = 'form-message error';
+    message.textContent = '❌ Failed to send message. Please try again or contact directly.';
+    
+    insertMessage(message);
+    setTimeout(() => removeMessage(message), 5000);
+}
+
+// Insert message into form
+function insertMessage(message) {
+    const form = document.getElementById('contact-form');
+    const submitButton = form.querySelector('button[type="submit"]');
+    
+    submitButton.parentNode.insertBefore(message, submitButton.nextSibling);
+}
+
+// Remove message
+function removeMessage(message) {
+    message.style.animation = 'slideOutDown 0.3s ease';
+    setTimeout(() => message.remove(), 300);
+}
 
 function showNotification(message, type = 'success') {
     // Create notification element
