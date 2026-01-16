@@ -208,6 +208,7 @@ linear-gradient(135deg, #1a0b2e 0%, #2d1b4e 50%, #4a2c6a 100%);
     position: relative;
     z-index: 1;
     padding: 0 20px;
+    min-height: 100vh;
 }
 
 .hero-content {
@@ -215,7 +216,11 @@ linear-gradient(135deg, #1a0b2e 0%, #2d1b4e 50%, #4a2c6a 100%);
     text-align: center;
     width: 100%;
     overflow: visible;
-    position: fixed;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    transform: translate(-50%, -50%);
+    z-index: 0;
 }
 
 .hero-title {
@@ -237,7 +242,10 @@ linear-gradient(135deg, #1a0b2e 0%, #2d1b4e 50%, #4a2c6a 100%);
 }
 
 .name-glow {
-    position: fixed;  
+    position: fixed;
+    top: 0%;
+    left: 0%;
+    
     display: inline-block;
     font-size: 22rem;
     font-weight: 900;
@@ -251,11 +259,13 @@ linear-gradient(135deg, #1a0b2e 0%, #2d1b4e 50%, #4a2c6a 100%);
         0 0 70px rgba(139, 92, 246, 0.2);
     letter-spacing: 5px;
     text-transform: uppercase;
-    animation: glow-pulse 4s ease-in-out infinite, slide-right-to-left 17s linear infinite;
-    position: relative;
+    animation: glow-pulse 4s ease-in-out infinite, slide-right-to-left 15s linear infinite;
+    
     white-space: nowrap;
     will-change: transform;
     width: max-content;
+    z-index: -1;
+    opacity: 0.9;
 }
 
 .name-glow::before {
@@ -309,13 +319,13 @@ linear-gradient(135deg, #1a0b2e 0%, #2d1b4e 50%, #4a2c6a 100%);
     text-transform: uppercase;
 }
 
-/* Avatar Container 
+/* Avatar Container */
 .hero-avatar-container {
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
-    z-index: 1;
+    z-index: 2;
 }
 
 .avatar-wrapper {
@@ -329,12 +339,12 @@ linear-gradient(135deg, #1a0b2e 0%, #2d1b4e 50%, #4a2c6a 100%);
 }
 
 .avatar-image {
-    width: 100%;
-    height: 100%;
+    width: 400%;
+    height: auto;
     object-fit: contain;
-    animation: avatar-float 6s ease-in-out infinite;
-    filter: drop-shadow(0 0 30px rgba(139, 92, 246, 0.5));
+    /* filter: drop-shadow(0 0 30px rgba(139, 92, 246, 0.5)); */
 }
+
 
 .avatar-3d {
     width: 100%;
@@ -361,7 +371,6 @@ linear-gradient(135deg, #1a0b2e 0%, #2d1b4e 50%, #4a2c6a 100%);
     border-radius: 20px;
     color: white;
     backdrop-filter: blur(10px);
-    animation: avatar-float 6s ease-in-out infinite;
 }
 
 .avatar-placeholder i {
@@ -378,14 +387,7 @@ linear-gradient(135deg, #1a0b2e 0%, #2d1b4e 50%, #4a2c6a 100%);
     padding: 0 20px;
 }
 
-@keyframes avatar-float {
-    0%, 100% {
-        transform: translateY(0) rotate(0deg);
-    }
-    50% {
-        transform: translateY(-20px) rotate(2deg);
-    }
-}
+/* Avatar animations removed for static display */
 
 /* Avatar glow effect 
 .avatar-wrapper::before {
