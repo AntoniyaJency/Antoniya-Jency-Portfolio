@@ -11,7 +11,7 @@ const GITHUB_CONFIG = {
     ],
     
     // Maximum number of repositories to display
-    maxRepos: 6,
+    maxRepos: 9,
     
     // Sort options: 'created', 'updated', 'pushed', 'full_name'
     sortBy: 'updated',
