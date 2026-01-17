@@ -1123,3 +1123,274 @@ const githubProjectsCSS = `
 const githubStyle = document.createElement('style');
 githubStyle.textContent = githubProjectsCSS;
 document.head.appendChild(githubStyle);
+
+// About Section Interactive Animations
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // Timeline Animation on Scroll
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, observerOptions);
+
+    // Observe timeline items
+    document.querySelectorAll('.timeline-item-3d').forEach(item => {
+        observer.observe(item);
+    });
+
+    // 3D Card Tilt Effect
+    const cards = document.querySelectorAll('[data-tilt]');
+    cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            const rotateX = (y - centerY) / 10;
+            const rotateY = (centerX - x) / 10;
+            
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+        });
+    });
+
+    // Skill Level Bars Animation
+    const levelBars = document.querySelectorAll('.level-bar');
+    const skillObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const bar = entry.target;
+                const level = bar.getAttribute('data-level');
+                setTimeout(() => {
+                    bar.style.width = level + '%';
+                }, 200);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    levelBars.forEach(bar => {
+        skillObserver.observe(bar);
+    });
+
+    // Stats Counter Animation
+    const statItems = document.querySelectorAll('.stat-item-3d');
+    const statsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const item = entry.target;
+                const target = parseInt(item.getAttribute('data-stat'));
+                const cubeFace = item.querySelector('.cube-front');
+                
+                animateCounter(cubeFace, 0, target, 2000);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    statItems.forEach(item => {
+        statsObserver.observe(item);
+    });
+
+    function animateCounter(element, start, end, duration) {
+        const startTime = performance.now();
+        
+        function update(currentTime) {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            
+            const current = Math.floor(progress * (end - start) + start);
+            element.textContent = current;
+            
+            if (progress < 1) {
+                requestAnimationFrame(update);
+            }
+        }
+        
+        requestAnimationFrame(update);
+    }
+
+    // Simple Typing Animation - Guaranteed to Work
+    document.addEventListener('DOMContentLoaded', function() {
+        const typingElement = document.querySelector('.typed-text');
+        const cursorElement = document.querySelector('.cursor');
+        
+        if (typingElement && cursorElement) {
+            console.log('Typing animation started - elements found');
+            const phrases = [
+                'Creative Full Stack Developer',
+                'UI/UX Design Enthusiast', 
+                'Problem Solving Expert',
+                'Performance Optimization Specialist'
+            ];
+            
+            let phraseIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+            
+            // Clear initial text completely
+            typingElement.textContent = '';
+            
+            // Ensure cursor is visible
+            cursorElement.style.display = 'inline-block';
+            cursorElement.style.opacity = '1';
+            
+            function typeChar() {
+                if (!isDeleting) {
+                    // Typing mode
+                    if (charIndex < phrases[phraseIndex].length) {
+                        typingElement.textContent = phrases[phraseIndex].substring(0, charIndex + 1);
+                        charIndex++;
+                        setTimeout(typeChar, 120);
+                    } else {
+                        // Finished typing, start deleting after delay
+                        setTimeout(() => {
+                            isDeleting = true;
+                            typeChar();
+                        }, 2000);
+                    }
+                } else {
+                    // Deleting mode
+                    if (charIndex > 0) {
+                        charIndex--;
+                        typingElement.textContent = phrases[phraseIndex].substring(0, charIndex);
+                        setTimeout(typeChar, 80);
+                    } else {
+                        // Finished deleting, go to next phrase
+                        isDeleting = false;
+                        phraseIndex = (phraseIndex + 1) % phrases.length;
+                        charIndex = 0;
+                        setTimeout(typeChar, 800);
+                    }
+                }
+            }
+            
+            // Start typing
+            setTimeout(typeChar, 1000);
+        }
+    });
+
+    // Parallax Effect for Background Shapes
+    const shapes = document.querySelectorAll('.shape');
+    const orbs = document.querySelectorAll('.gradient-orb');
+    
+    window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        const parallax = scrolled * 0.5;
+        
+        shapes.forEach((shape, index) => {
+            const speed = 0.2 + (index * 0.1);
+            shape.style.transform = `translateY(${scrolled * speed}px) rotate(${scrolled * 0.1}deg)`;
+        });
+        
+        orbs.forEach((orb, index) => {
+            const speed = 0.3 + (index * 0.15);
+            orb.style.transform = `translate(${scrolled * speed}px, ${scrolled * speed * 0.5}px)`;
+        });
+    });
+
+    // Mouse Follow Effect for Orbs
+    document.addEventListener('mousemove', (e) => {
+        const mouseX = e.clientX / window.innerWidth;
+        const mouseY = e.clientY / window.innerHeight;
+        
+        orbs.forEach((orb, index) => {
+            const speed = 0.02 + (index * 0.01);
+            const x = (mouseX - 0.5) * 100 * speed;
+            const y = (mouseY - 0.5) * 100 * speed;
+            
+            orb.style.transform = `translate(${x}px, ${y}px)`;
+        });
+    });
+
+    // Interactive Hover Effects
+    const introCard = document.querySelector('.intro-card');
+    if (introCard) {
+        introCard.addEventListener('mouseenter', () => {
+            introCard.style.transform = 'translateY(-15px) scale(1.03) rotateZ(1deg)';
+        });
+        
+        introCard.addEventListener('mouseleave', () => {
+            introCard.style.transform = 'translateY(0) scale(1) rotateZ(0deg)';
+        });
+    }
+
+    // Timeline Item Hover Effects
+    const timelineItems = document.querySelectorAll('.timeline-content-3d');
+    timelineItems.forEach(item => {
+        item.addEventListener('mouseenter', () => {
+            const marker = item.parentElement.querySelector('.marker-core');
+            if (marker) {
+                marker.style.transform = 'translate(-50%, -50%) scale(1.5)';
+                marker.style.boxShadow = '0 0 30px rgba(139, 92, 246, 1)';
+            }
+        });
+        
+        item.addEventListener('mouseleave', () => {
+            const marker = item.parentElement.querySelector('.marker-core');
+            if (marker) {
+                marker.style.transform = 'translate(-50%, -50%) scale(1)';
+                marker.style.boxShadow = '0 0 20px rgba(139, 92, 246, 0.8)';
+            }
+        });
+    });
+
+    // Add particle generation
+    createAboutParticles();
+});
+
+function createAboutParticles() {
+    const particleField = document.querySelector('.particle-field');
+    if (!particleField) return;
+    
+    for (let i = 0; i < 50; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'dynamic-particle';
+        particle.style.cssText = `
+            position: absolute;
+            width: ${Math.random() * 3 + 1}px;
+            height: ${Math.random() * 3 + 1}px;
+            background: rgba(139, 92, 246, ${Math.random() * 0.8 + 0.2});
+            border-radius: 50%;
+            left: ${Math.random() * 100}%;
+            top: ${Math.random() * 100}%;
+            animation: particle-float ${Math.random() * 10 + 5}s linear infinite;
+            animation-delay: ${Math.random() * 5}s;
+        `;
+        particleField.appendChild(particle);
+    }
+}
+
+// Add particle float animation
+const particleStyle = document.createElement('style');
+particleStyle.textContent = `
+    @keyframes particle-float {
+        0% {
+            transform: translateY(0) translateX(0);
+            opacity: 0;
+        }
+        10% {
+            opacity: 1;
+        }
+        90% {
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(-100vh) translateX(${Math.random() * 200 - 100}px);
+            opacity: 0;
+        }
+    }
+`;
+document.head.appendChild(particleStyle);

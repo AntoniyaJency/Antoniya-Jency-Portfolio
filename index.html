@@ -122,98 +122,224 @@
         
     <!-- About Section -->
     <section id="about" class="about">
+        <!-- Dynamic Background -->
         <div class="about-bg-animation">
-            <div class="floating-code"></div>
-            <div class="floating-code"></div>
-            <div class="floating-code"></div>
-            <div class="floating-code"></div>
-            <div class="floating-code"></div>
+            <div class="floating-shapes">
+                <div class="shape shape-1"></div>
+                <div class="shape shape-2"></div>
+                <div class="shape shape-3"></div>
+                <div class="shape shape-4"></div>
+                <div class="shape shape-5"></div>
+                <div class="shape shape-6"></div>
+            </div>
+            <div class="particle-field"></div>
+            <div class="gradient-orb orb-1"></div>
+            <div class="gradient-orb orb-2"></div>
+            <div class="gradient-orb orb-3"></div>
         </div>
         
         <div class="container">
-            <h2 class="section-title">About Me</h2>
+            <div class="about-header">
+                <h2 class="section-title glitch-text" data-text="About Me">About Me</h2>
+                <div class="title-underline"></div>
+            </div>
             
-            <div class="about-content">
-                <div class="about-unique">
-                    <div class="typing-intro">
-                        <span class="typed-text"></span>
-                        <span class="cursor">|</span>
-                    </div>
-                    
-                    <div class="about-cards">
-                        <div class="about-card card-1">
-                            <div class="card-icon">💻</div>
-                            <h3>Developer</h3>
-                            <p>Crafting digital experiences with clean, efficient code and modern technologies</p>
-                            <div class="tech-stack">
-                                <span class="tech-item">React</span>
-                                <span class="tech-item">Node.js</span>
-                                <span class="tech-item">TypeScript</span>
+            <div class="about-content-unique">
+                <!-- Hero Introduction -->
+                <div class="intro-section">
+                    <div class="intro-card floating">
+                        <div class="intro-icon-wrapper">
+                            <div class="intro-icon">
+                                <i class="fas fa-code"></i>
                             </div>
+                            <div class="icon-ring"></div>
                         </div>
-                        
-                        <div class="about-card card-2">
-                            <div class="card-icon">🎨</div>
-                            <h3>Designer</h3>
-                            <p>Creating intuitive interfaces with attention to detail and user experience</p>
-                            <div class="tech-stack">
-                                <span class="tech-item">UI/UX</span>
-                                <span class="tech-item">Figma</span>
-                                <span class="tech-item">CSS3</span>
-                            </div>
-                        </div>
-                        
-                        <div class="about-card card-3">
-                            <div class="card-icon">🚀</div>
-                            <h3>Problem Solver</h3>
-                            <p>Tackling complex challenges with analytical thinking and creative solutions</p>
-                            <div class="tech-stack">
-                                <span class="tech-item">Algorithms</span>
-                                <span class="tech-item">Debugging</span>
-                                <span class="tech-item">Optimization</span>
-                            </div>
+                        <div class="intro-text">
+                            <h3 class="typing-text">
+                                <span class="typed-text">Creative Full Stack Developer</span>
+                                <span class="cursor">|</span>
+                            </h3>
+                            <p>Passionate about crafting exceptional digital experiences with cutting-edge technologies and innovative design solutions.</p>
                         </div>
                     </div>
-                    
-                    <div class="about-timeline">
-                        <div class="timeline-item">
-                            <div class="timeline-dot"></div>
-                            <div class="timeline-content">
-                                <h4>Full Stack Development</h4>
-                                <p>Building end-to-end applications with modern tech stacks</p>
+                </div>
+
+                <!-- Skills Showcase -->
+                <div class="skills-showcase">
+                    <div class="skill-card card-3d" data-tilt>
+                        <div class="card-face card-front">
+                            <div class="skill-icon">
+                                <i class="fas fa-laptop-code"></i>
+                            </div>
+                            <h4>Development</h4>
+                            <div class="skill-level">
+                                <div class="level-bar" data-level="90"></div>
                             </div>
                         </div>
-                        
-                        <div class="timeline-item">
-                            <div class="timeline-dot"></div>
-                            <div class="timeline-content">
-                                <h4>UI/UX Design</h4>
-                                <p>Creating beautiful and functional user interfaces</p>
-                            </div>
-                        </div>
-                        
-                        <div class="timeline-item">
-                            <div class="timeline-dot"></div>
-                            <div class="timeline-content">
-                                <h4>Performance Optimization</h4>
-                                <p>Ensuring fast and efficient application performance</p>
+                        <div class="card-face card-back">
+                            <div class="skill-details">
+                                <h5>Tech Stack</h5>
+                                <div class="tech-tags">
+                                    <span class="tech-tag">React</span>
+                                    <span class="tech-tag">Node.js</span>
+                                    <span class="tech-tag">TypeScript</span>
+                                    <span class="tech-tag">Python</span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="about-stats-unique">
-                        <div class="stat-circle">
-                            <div class="stat-number" data-target="50">0</div>
-                            <div class="stat-label">Projects</div>
+
+                    <div class="skill-card card-3d" data-tilt>
+                        <div class="card-face card-front">
+                            <div class="skill-icon">
+                                <i class="fas fa-palette"></i>
+                            </div>
+                            <h4>Design</h4>
+                            <div class="skill-level">
+                                <div class="level-bar" data-level="85"></div>
+                            </div>
                         </div>
-                        <div class="stat-circle">
-                            <div class="stat-number" data-target="1000">0</div>
-                            <div class="stat-label">Hours</div>
+                        <div class="card-face card-back">
+                            <div class="skill-details">
+                                <h5>Tools</h5>
+                                <div class="tech-tags">
+                                    <span class="tech-tag">Figma</span>
+                                    <span class="tech-tag">CSS3</span>
+                                    <span class="tech-tag">UI/UX</span>
+                                    <span class="tech-tag">Animation</span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="stat-circle">
-                            <div class="stat-number" data-target="15">0</div>
-                            <div class="stat-label">Tech Stack</div>
+                    </div>
+
+                    <div class="skill-card card-3d" data-tilt>
+                        <div class="card-face card-front">
+                            <div class="skill-icon">
+                                <i class="fas fa-rocket"></i>
+                            </div>
+                            <h4>Innovation</h4>
+                            <div class="skill-level">
+                                <div class="level-bar" data-level="95"></div>
+                            </div>
                         </div>
+                        <div class="card-face card-back">
+                            <div class="skill-details">
+                                <h5>Focus Areas</h5>
+                                <div class="tech-tags">
+                                    <span class="tech-tag">Performance</span>
+                                    <span class="tech-tag">Optimization</span>
+                                    <span class="tech-tag">Problem Solving</span>
+                                    <span class="tech-tag">Architecture</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3D Timeline -->
+                <div class="timeline-3d-container">
+                    <h3 class="timeline-title">Journey & Achievements</h3>
+                    <div class="timeline-3d">
+                        <div class="timeline-track"></div>
+                        
+                        <div class="timeline-item-3d" data-aos="fade-right">
+                            <div class="timeline-marker">
+                                <div class="marker-core"></div>
+                                <div class="marker-ring"></div>
+                                <div class="marker-pulse"></div>
+                            </div>
+                            <div class="timeline-content-3d">
+                                <div class="content-header">
+                                    <h4>Full Stack Mastery</h4>
+                                    <span class="timeline-date">2024</span>
+                                </div>
+                                <p>Architecting scalable web applications with modern frameworks and cloud technologies</p>
+                                <div class="timeline-tech">
+                                    <i class="fab fa-react"></i>
+                                    <i class="fab fa-node"></i>
+                                    <i class="fas fa-database"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item-3d" data-aos="fade-left">
+                            <div class="timeline-marker">
+                                <div class="marker-core"></div>
+                                <div class="marker-ring"></div>
+                                <div class="marker-pulse"></div>
+                            </div>
+                            <div class="timeline-content-3d">
+                                <div class="content-header">
+                                    <h4>UI/UX Excellence</h4>
+                                    <span class="timeline-date">2023</span>
+                                </div>
+                                <p>Creating intuitive and visually stunning user interfaces with attention to detail</p>
+                                <div class="timeline-tech">
+                                    <i class="fab fa-figma"></i>
+                                    <i class="fab fa-css3-alt"></i>
+                                    <i class="fas fa-paint-brush"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item-3d" data-aos="fade-right">
+                            <div class="timeline-marker">
+                                <div class="marker-core"></div>
+                                <div class="marker-ring"></div>
+                                <div class="marker-pulse"></div>
+                            </div>
+                            <div class="timeline-content-3d">
+                                <div class="content-header">
+                                    <h4>Performance Optimization</h4>
+                                    <span class="timeline-date">2022</span>
+                                </div>
+                                <p>Optimizing applications for maximum speed, scalability, and user experience</p>
+                                <div class="timeline-tech">
+                                    <i class="fas fa-tachometer-alt"></i>
+                                    <i class="fas fa-chart-line"></i>
+                                    <i class="fas fa-bolt"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Stats -->
+                <div class="stats-interactive">
+                    <div class="stat-item-3d" data-stat="50">
+                        <div class="stat-cube">
+                            <div class="cube-face cube-front">50</div>
+                            <div class="cube-face cube-back">Projects</div>
+                            <div class="cube-face cube-top"></div>
+                            <div class="cube-face cube-bottom"></div>
+                            <div class="cube-face cube-left"></div>
+                            <div class="cube-face cube-right"></div>
+                        </div>
+                        <span class="stat-label">Projects Completed</span>
+                    </div>
+
+                    <div class="stat-item-3d" data-stat="1000">
+                        <div class="stat-cube">
+                            <div class="cube-face cube-front">1000</div>
+                            <div class="cube-face cube-back">Hours</div>
+                            <div class="cube-face cube-top"></div>
+                            <div class="cube-face cube-bottom"></div>
+                            <div class="cube-face cube-left"></div>
+                            <div class="cube-face cube-right"></div>
+                        </div>
+                        <span class="stat-label">Hours of Code</span>
+                    </div>
+
+                    <div class="stat-item-3d" data-stat="15">
+                        <div class="stat-cube">
+                            <div class="cube-face cube-front">15</div>
+                            <div class="cube-face cube-back">Technologies</div>
+                            <div class="cube-face cube-top"></div>
+                            <div class="cube-face cube-bottom"></div>
+                            <div class="cube-face cube-left"></div>
+                            <div class="cube-face cube-right"></div>
+                        </div>
+                        <span class="stat-label">Tech Stack</span>
                     </div>
                 </div>
             </div>
@@ -365,15 +491,15 @@
                     <h3>Achievements</h3>
                     <div class="achievement-list">
                         <div class="achievement-item">
-                            <i class="achievement-icon">🏆</i>
+                            <i class="achievement-icon fas fa-trophy"></i>
                             <span>District Championship Finalist</span>
                         </div>
                         <div class="achievement-item">
-                            <i class="achievement-icon">🥈</i>
+                            <i class="achievement-icon fas fa-medal"></i>
                             <span>Inter-School Tournament Runner-up</span>
                         </div>
                         <div class="achievement-item">
-                            <i class="achievement-icon">⭐</i>
+                            <i class="achievement-icon fas fa-star"></i>
                             <span>Best Tactical Play Award</span>
                         </div>
                     </div>
