@@ -1787,6 +1787,543 @@ section {
 }
 
 
+/* Investor Section - Dark Theme */
+.investor {
+    padding: 100px 0;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Video Background Styles - Dark Theme */
+.video-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background: #0f172a; /* Fallback background */
+}
+
+.video-background video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: 100%;
+    height: 100%;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    opacity: 0.8;
+    filter: brightness(0.9) contrast(1.1);
+    z-index: 1;
+}
+
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        135deg,
+        rgba(15, 23, 42, 0.7) 0%,
+        rgba(30, 41, 59, 0.6) 50%,
+        rgba(51, 65, 85, 0.7) 100%
+    );
+    z-index: 2;
+}
+
+.video-fallback {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+        linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+    z-index: 0;
+    animation: float 6s ease-in-out infinite;
+}
+
+/* Floating Elements Animation */
+.floating-elements {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.floating-chart {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(6, 182, 212, 0.2));
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    border-radius: 8px;
+    backdrop-filter: none;
+    animation: float-random 20s infinite ease-in-out;
+}
+
+.floating-chart:nth-child(1) {
+    top: 10%;
+    left: 10%;
+    animation-delay: 0s;
+    animation-duration: 15s;
+}
+
+.floating-chart:nth-child(2) {
+    top: 20%;
+    right: 15%;
+    animation-delay: 3s;
+    animation-duration: 18s;
+}
+
+.floating-chart:nth-child(3) {
+    top: 60%;
+    left: 5%;
+    animation-delay: 6s;
+    animation-duration: 22s;
+}
+
+.floating-chart:nth-child(4) {
+    top: 70%;
+    right: 8%;
+    animation-delay: 9s;
+    animation-duration: 17s;
+}
+
+.floating-chart:nth-child(5) {
+    top: 40%;
+    left: 80%;
+    animation-delay: 12s;
+    animation-duration: 20s;
+}
+
+.floating-chart:nth-child(6) {
+    top: 85%;
+    right: 25%;
+    animation-delay: 15s;
+    animation-duration: 25s;
+}
+
+@keyframes float-random {
+    0%, 100% {
+        transform: translateY(0px) translateX(0px) rotate(0deg);
+        opacity: 0.3;
+    }
+    25% {
+        transform: translateY(-20px) translateX(10px) rotate(90deg);
+        opacity: 0.6;
+    }
+    50% {
+        transform: translateY(-10px) translateX(-15px) rotate(180deg);
+        opacity: 0.4;
+    }
+    75% {
+        transform: translateY(-30px) translateX(5px) rotate(270deg);
+        opacity: 0.7;
+    }
+}
+
+/* Enhanced Avatar */
+.avatar-glow {
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    background: linear-gradient(45deg, #3b82f6, #06b6d4, #3b82f6);
+    border-radius: 50%;
+    z-index: -1;
+    animation: rotate-glow 3s linear infinite;
+}
+
+@keyframes rotate-glow {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Investor Badges */
+.investor-badges {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+}
+
+.badge {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(6, 182, 212, 0.3));
+    border: 1px solid rgba(59, 130, 246, 0.4);
+    color: #60a5fa;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    backdrop-filter: none;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.badge::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    animation: badge-shimmer 2s infinite;
+}
+
+@keyframes badge-shimmer {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+.badge:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
+    border-color: rgba(96, 165, 250, 0.6);
+}
+
+/* Investor Cards Grid Layout */
+.investor-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.investor-card {
+    background: rgba(15, 23, 42, 0.95);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(59, 130, 246, 0.1);
+    backdrop-filter: none;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.investor-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(96, 165, 250, 0.05), transparent);
+    transition: left 0.6s ease;
+}
+
+.investor-card:hover::before {
+    left: 100%;
+}
+
+.floating-card {
+    animation: card-float 6s ease-in-out infinite;
+}
+
+.floating-card:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.floating-card:nth-child(2) {
+    animation-delay: 1.5s;
+}
+
+.floating-card:nth-child(3) {
+    animation-delay: 3s;
+}
+
+.floating-card:nth-child(4) {
+    animation-delay: 4.5s;
+}
+
+@keyframes card-float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.investor-card:hover {
+    transform: translateY(-15px) scale(1.02);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 0 2px rgba(96, 165, 250, 0.3);
+    border-color: rgba(96, 165, 250, 0.4);
+}
+
+/* Remove old investor-content styles */
+.investor .container {
+    position: relative;
+    z-index: 3;
+}
+
+.investor .section-title {
+    text-align: center;
+    color: #ffffff;
+    margin-bottom: 60px;
+    font-size: 3rem;
+    font-weight: 700;
+    text-shadow: 0 0 20px rgba(255,255,255,0.3);
+}
+
+.investor-content {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: rgba(15, 23, 42, 0.85);
+    border: 1px solid rgba(148, 163, 184, 0.3);
+    border-radius: 20px;
+    padding: 60px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(59, 130, 246, 0.2);
+    backdrop-filter: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.investor-content::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent 30%,
+        rgba(59, 130, 246, 0.05) 50%,
+        transparent 70%
+    );
+    animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%) translateY(-100%) rotate(45deg);
+    }
+    100% {
+        transform: translateX(100%) translateY(100%) rotate(45deg);
+    }
+}
+
+.investor-header {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 40px;
+    padding-bottom: 30px;
+    border-bottom: 2px solid rgba(148, 163, 184, 0.2);
+    position: relative;
+    z-index: 1;
+}
+
+.investor-avatar {
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(135deg, #3b82f6, #06b6d4);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    color: white;
+    box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+    animation: pulse 2s infinite;
+}
+
+.investor-info h3 {
+    font-size: 2rem;
+    color: #f1f5f9;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.investor-subtitle {
+    color: #94a3b8;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.investor-description {
+    margin-bottom: 40px;
+}
+
+.investor-description p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #cbd5e1;
+    text-align: center;
+}
+
+.investor-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.investor-stats .stat-card {
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9));
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.investor-stats .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(96, 165, 250, 0.1), transparent);
+    transition: left 0.6s ease;
+}
+
+.investor-stats .stat-card:hover::before {
+    left: 100%;
+}
+
+.investor-stats .stat-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(96, 165, 250, 0.3);
+    border-color: rgba(96, 165, 250, 0.5);
+}
+
+.investor-stats .stat-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #60a5fa;
+    margin-bottom: 10px;
+    display: block;
+    position: relative;
+    text-shadow: 0 0 20px rgba(96, 165, 250, 0.3);
+    animation: number-glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes number-glow {
+    0% {
+        text-shadow: 0 0 20px rgba(96, 165, 250, 0.3);
+    }
+    100% {
+        text-shadow: 0 0 30px rgba(96, 165, 250, 0.5);
+    }
+}
+
+.investor-stats .stat-label {
+    color: #94a3b8;
+    font-size: 1rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.investor-skills {
+    margin-bottom: 40px;
+}
+
+.investor-skills h3 {
+    font-size: 1.8rem;
+    color: #f1f5f9;
+    margin-bottom: 25px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.investor-skills .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+}
+
+.investor-skills .skill-tag {
+    background: linear-gradient(135deg, #3b82f6, #1e40af);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.investor-skills .skill-tag:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+}
+
+.investor-platform {
+    text-align: center;
+    padding: 30px;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(30, 64, 175, 0.2));
+    border-radius: 15px;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.platform-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: linear-gradient(135deg, #06b6d4, #0891b2);
+    color: white;
+    padding: 15px 30px;
+    border-radius: 30px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    box-shadow: 0 8px 25px rgba(6, 182, 212, 0.3);
+}
+
+.platform-badge i {
+    font-size: 1.3rem;
+}
+
+.platform-note {
+    color: #94a3b8;
+    font-size: 1rem;
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
 
 /* Contact Section */
 .contact {
@@ -2160,6 +2697,54 @@ section {
         flex-direction: column;
         text-align: center;
     }
+
+    /* Investor Section Responsive */
+    .investor-content {
+        padding: 40px 30px;
+    }
+
+    .investor-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+
+    .investor-avatar {
+        width: 80px;
+        height: 80px;
+        font-size: 2rem;
+    }
+
+    .investor-info h3 {
+        font-size: 1.5rem;
+    }
+
+    .investor-stats {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .investor-stats .stat-card {
+        padding: 20px;
+    }
+
+    .investor-stats .stat-number {
+        font-size: 2rem;
+    }
+
+    .investor-skills .skill-tags {
+        gap: 10px;
+    }
+
+    .investor-skills .skill-tag {
+        padding: 10px 20px;
+        font-size: 0.85rem;
+    }
+
+    .platform-badge {
+        padding: 12px 24px;
+        font-size: 1rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -2197,5 +2782,58 @@ section {
     .about-stats {
         flex-direction: column;
         gap: 1.5rem;
+    }
+
+    /* Investor Section Mobile Responsive */
+    .investor-content {
+        padding: 30px 20px;
+    }
+
+    .investor .section-title {
+        font-size: 2rem;
+    }
+
+    .investor-avatar {
+        width: 70px;
+        height: 70px;
+        font-size: 1.5rem;
+    }
+
+    .investor-info h3 {
+        font-size: 1.3rem;
+    }
+
+    .investor-subtitle {
+        font-size: 1rem;
+    }
+
+    .investor-description p {
+        font-size: 1rem;
+    }
+
+    .investor-stats .stat-number {
+        font-size: 1.8rem;
+    }
+
+    .investor-stats .stat-label {
+        font-size: 0.9rem;
+    }
+
+    .investor-skills h3 {
+        font-size: 1.5rem;
+    }
+
+    .investor-skills .skill-tag {
+        padding: 8px 16px;
+        font-size: 0.8rem;
+    }
+
+    .platform-badge {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+
+    .platform-note {
+        font-size: 0.9rem;
     }
 }

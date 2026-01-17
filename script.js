@@ -1,3 +1,42 @@
+// Investor Video Background Handler
+document.addEventListener('DOMContentLoaded', function() {
+    const video = document.getElementById('investor-video');
+    
+    if (video) {
+        // Try to play the video
+        video.play().catch(function(error) {
+            console.log('Video autoplay failed:', error);
+            // If autoplay fails, show fallback
+            const fallback = document.querySelector('.video-fallback');
+            if (fallback) {
+                fallback.style.opacity = '1';
+                fallback.style.zIndex = '1';
+            }
+        });
+        
+        // Handle video loading
+        video.addEventListener('loadeddata', function() {
+            console.log('Video loaded successfully');
+            // Hide fallback when video loads
+            const fallback = document.querySelector('.video-fallback');
+            if (fallback) {
+                fallback.style.opacity = '0';
+            }
+        });
+        
+        // Handle video error
+        video.addEventListener('error', function() {
+            console.log('Video failed to load');
+            // Show fallback if video fails
+            const fallback = document.querySelector('.video-fallback');
+            if (fallback) {
+                fallback.style.opacity = '1';
+                fallback.style.zIndex = '1';
+            }
+        });
+    }
+});
+
 // Create Particles/Stars Background
 function createParticles() {
     const particlesContainer = document.getElementById('particles');
