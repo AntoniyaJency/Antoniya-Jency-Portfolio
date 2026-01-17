@@ -1521,7 +1521,7 @@ text-shadow: 0 0 1px rgba(139, 92, 246, 0.8);}
     position: relative;
 }
 
-.skills .section-title::after {
+/* .skills .section-title::after {
     content: '';
     position: absolute;
     bottom: -10px;
@@ -1532,7 +1532,7 @@ text-shadow: 0 0 1px rgba(139, 92, 246, 0.8);}
     background: linear-gradient(90deg, #6366f1, #8b5cf6, #ec4899);
     border-radius: 2px;
     animation: shimmer 2s ease-in-out infinite;
-}
+} */
 
 .skills-grid {
     display: grid;
