@@ -775,35 +775,34 @@ console.log('%c👋 Hello! Thanks for checking out my portfolio!', 'color: #6366
 console.log('%cBuilt with HTML, CSS, and JavaScript', 'color: #8b5cf6; font-size: 12px;');
 
 // GitHub Projects Integration
-// Use the configuration from config.js if available, otherwise use defaults
-const GITHUB_CONFIG = window.GITHUB_CONFIG || {
-    username: 'YOUR_GITHUB_USERNAME', // Replace with your GitHub username
-    excludeRepos: ['username.github.io', 'Antoniya-Jency-Portfolio'], // Repositories to exclude
-    maxRepos: 6, // Maximum number of repositories to display
-    sortBy: 'updated', // 'created', 'updated', 'pushed', 'full_name'
-    order: 'desc', // 'asc' or 'desc'
-    includeForks: false,
-    minSizeKB: 10,
-    showArchived: false
-};
+// Use the configuration from config.js
+console.log('GitHub script loaded, window.GITHUB_CONFIG:', window.GITHUB_CONFIG);
 
 // Fetch GitHub repositories
 async function fetchGitHubRepos() {
     try {
-        const { username, excludeRepos, maxRepos, sortBy, order, includeForks, minSizeKB, showArchived } = GITHUB_CONFIG;
+        const { username, excludeRepos, maxRepos, sortBy, order, includeForks, minSizeKB, showArchived } = window.GITHUB_CONFIG;
+        
+        console.log('Fetching repos for username:', username);
+        console.log('Config:', { username, excludeRepos, maxRepos, sortBy, order });
         
         // Show loading state
         showProjectsLoading();
         
-        const response = await fetch(
-            `https://api.github.com/users/${username}/repos?per_page=${maxRepos * 2}&sort=${sortBy}&direction=${order}`
-        );
+        const apiUrl = `https://api.github.com/users/${username}/repos?per_page=${maxRepos * 2}&sort=${sortBy}&direction=${order}`;
+        console.log('Fetching from:', apiUrl);
+        
+        const response = await fetch(apiUrl);
+        
+        console.log('Response status:', response.status);
+        console.log('Response ok:', response.ok);
         
         if (!response.ok) {
             throw new Error(`GitHub API error: ${response.status}`);
         }
         
         const repos = await response.json();
+        console.log('Fetched repos:', repos.length, repos.map(r => r.name));
         
         // Filter out excluded repositories and apply additional filters
         const filteredRepos = repos
@@ -812,6 +811,8 @@ async function fetchGitHubRepos() {
             .filter(repo => showArchived || !repo.archived) // Include archived only if configured
             .filter(repo => repo.size >= minSizeKB) // Filter by minimum size
             .slice(0, maxRepos);
+        
+        console.log('Filtered repos:', filteredRepos.length, filteredRepos.map(r => r.name));
         
         renderGitHubProjects(filteredRepos);
         

@@ -6,8 +6,7 @@ const GITHUB_CONFIG = {
     
     // Optional: Repositories to exclude from the display
     excludeRepos: [
-        'username.github.io', 
-        'Antoniya-Jency-Portfolio',
+        'username.github.io',
         'config' // Exclude this config file repository if it exists
     ],
     
@@ -24,7 +23,7 @@ const GITHUB_CONFIG = {
     includeForks: false,
     
     // Minimum repository size in KB (filters out very small repos)
-    minSizeKB: 10,
+    minSizeKB: 1,
     
     // Show archived repositories? (true/false)
     showArchived: false
@@ -33,4 +32,9 @@ const GITHUB_CONFIG = {
 // Export for use in other files
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = GITHUB_CONFIG;
+}
+
+// Make available in browser
+if (typeof window !== 'undefined') {
+    window.GITHUB_CONFIG = GITHUB_CONFIG;
 }
