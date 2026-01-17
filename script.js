@@ -773,3 +773,313 @@ document.head.appendChild(rippleStyle);
 // Console message
 console.log('%c👋 Hello! Thanks for checking out my portfolio!', 'color: #6366f1; font-size: 16px; font-weight: bold;');
 console.log('%cBuilt with HTML, CSS, and JavaScript', 'color: #8b5cf6; font-size: 12px;');
+
+// GitHub Projects Integration
+// Use the configuration from config.js if available, otherwise use defaults
+const GITHUB_CONFIG = window.GITHUB_CONFIG || {
+    username: 'YOUR_GITHUB_USERNAME', // Replace with your GitHub username
+    excludeRepos: ['username.github.io', 'Antoniya-Jency-Portfolio'], // Repositories to exclude
+    maxRepos: 6, // Maximum number of repositories to display
+    sortBy: 'updated', // 'created', 'updated', 'pushed', 'full_name'
+    order: 'desc', // 'asc' or 'desc'
+    includeForks: false,
+    minSizeKB: 10,
+    showArchived: false
+};
+
+// Fetch GitHub repositories
+async function fetchGitHubRepos() {
+    try {
+        const { username, excludeRepos, maxRepos, sortBy, order, includeForks, minSizeKB, showArchived } = GITHUB_CONFIG;
+        
+        // Show loading state
+        showProjectsLoading();
+        
+        const response = await fetch(
+            `https://api.github.com/users/${username}/repos?per_page=${maxRepos * 2}&sort=${sortBy}&direction=${order}`
+        );
+        
+        if (!response.ok) {
+            throw new Error(`GitHub API error: ${response.status}`);
+        }
+        
+        const repos = await response.json();
+        
+        // Filter out excluded repositories and apply additional filters
+        const filteredRepos = repos
+            .filter(repo => !excludeRepos.includes(repo.name))
+            .filter(repo => includeForks || !repo.fork) // Include forks only if configured
+            .filter(repo => showArchived || !repo.archived) // Include archived only if configured
+            .filter(repo => repo.size >= minSizeKB) // Filter by minimum size
+            .slice(0, maxRepos);
+        
+        renderGitHubProjects(filteredRepos);
+        
+    } catch (error) {
+        console.error('Error fetching GitHub repositories:', error);
+        showProjectsError();
+    }
+}
+
+// Render GitHub projects
+function renderGitHubProjects(repos) {
+    const projectsGrid = document.querySelector('.projects-grid');
+    
+    if (!projectsGrid) {
+        console.error('Projects grid not found');
+        return;
+    }
+    
+    // Clear existing content
+    projectsGrid.innerHTML = '';
+    
+    if (repos.length === 0) {
+        projectsGrid.innerHTML = `
+            <div class="no-projects">
+                <i class="fas fa-code-branch"></i>
+                <p>No repositories found. Update your GitHub username in the configuration.</p>
+            </div>
+        `;
+        return;
+    }
+    
+    repos.forEach(repo => {
+        const projectCard = createProjectCard(repo);
+        projectsGrid.appendChild(projectCard);
+    });
+    
+    // Add animations to new cards
+    animateProjectCards();
+}
+
+// Create project card from repository data
+function createProjectCard(repo) {
+    const card = document.createElement('div');
+    card.className = 'project-card github-project';
+    
+    // Get language colors
+    const language = repo.language || 'Unknown';
+    const languageColor = getLanguageColor(language);
+    
+    // Format description
+    const description = repo.description || 
+        `A ${language} project with ${repo.stargazers_count} stars and ${repo.forks_count} forks.`;
+    
+    // Get topics/tags
+    const topics = repo.topics.slice(0, 3); // Limit to 3 topics
+    
+    card.innerHTML = `
+        <div class="project-image">
+            <div class="project-overlay">
+                <a href="${repo.html_url}" target="_blank" class="project-link" aria-label="View Repository">
+                    <i class="fab fa-github"></i>
+                </a>
+                ${repo.homepage ? `
+                    <a href="${repo.homepage}" target="_blank" class="project-link" aria-label="View Live Demo">
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                ` : ''}
+            </div>
+            <div class="repo-language-indicator" style="background-color: ${languageColor}"></div>
+            <div class="image-placeholder">
+                <i class="fab fa-github"></i>
+            </div>
+        </div>
+        <div class="project-content">
+            <h3 class="project-title">${repo.name}</h3>
+            <p class="project-description">${description}</p>
+            <div class="project-meta">
+                <span class="repo-language">
+                    <span class="language-dot" style="background-color: ${languageColor}"></span>
+                    ${language}
+                </span>
+                <span class="repo-stars">
+                    <i class="fas fa-star"></i> ${repo.stargazers_count}
+                </span>
+                <span class="repo-forks">
+                    <i class="fas fa-code-branch"></i> ${repo.forks_count}
+                </span>
+            </div>
+            ${topics.length > 0 ? `
+                <div class="project-tags">
+                    ${topics.map(topic => `<span class="tag">${topic}</span>`).join('')}
+                </div>
+            ` : ''}
+        </div>
+    `;
+    
+    return card;
+}
+
+// Get language color for GitHub language
+function getLanguageColor(language) {
+    const colors = {
+        'JavaScript': '#f1e05a',
+        'TypeScript': '#2b7489',
+        'Python': '#3572A5',
+        'Java': '#b07219',
+        'C++': '#f34b7d',
+        'C#': '#239120',
+        'PHP': '#4F5D95',
+        'Ruby': '#701516',
+        'Go': '#00ADD8',
+        'Rust': '#dea584',
+        'Swift': '#ffac45',
+        'Kotlin': '#F18E33',
+        'HTML': '#e34c26',
+        'CSS': '#1572b6',
+        'SCSS': '#c6538c',
+        'Vue': '#41b883',
+        'React': '#61dafb',
+        'Angular': '#dd0031',
+        'Node.js': '#339933',
+        'Docker': '#2496ed',
+        'Shell': '#89e051',
+        'Unknown': '#858585'
+    };
+    
+    return colors[language] || colors['Unknown'];
+}
+
+// Show loading state for projects
+function showProjectsLoading() {
+    const projectsGrid = document.querySelector('.projects-grid');
+    if (projectsGrid) {
+        projectsGrid.innerHTML = `
+            <div class="projects-loading">
+                <div class="spinner"></div>
+                <p>Loading projects from GitHub...</p>
+            </div>
+        `;
+    }
+}
+
+// Show error state for projects
+function showProjectsError() {
+    const projectsGrid = document.querySelector('.projects-grid');
+    if (projectsGrid) {
+        projectsGrid.innerHTML = `
+            <div class="projects-error">
+                <i class="fas fa-exclamation-triangle"></i>
+                <p>Failed to load projects from GitHub.</p>
+                <button onclick="fetchGitHubRepos()" class="btn btn-primary">Try Again</button>
+            </div>
+        `;
+    }
+}
+
+// Animate project cards when they're added
+function animateProjectCards() {
+    const cards = document.querySelectorAll('.github-project');
+    cards.forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(30px)';
+        
+        setTimeout(() => {
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+        }, index * 100);
+    });
+}
+
+// Initialize GitHub projects when page loads
+document.addEventListener('DOMContentLoaded', () => {
+    // Check if we're on the projects page or if projects section exists
+    const projectsSection = document.getElementById('projects');
+    if (projectsSection) {
+        // Small delay to ensure page is fully loaded
+        setTimeout(() => {
+            fetchGitHubRepos();
+        }, 500);
+    }
+});
+
+// Add CSS for GitHub projects
+const githubProjectsCSS = `
+    .projects-loading, .projects-error, .no-projects {
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: 3rem;
+        color: #64748b;
+    }
+    
+    .projects-loading .spinner {
+        width: 40px;
+        height: 40px;
+        border: 3px solid #e2e8f0;
+        border-top: 3px solid #6366f1;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 1rem;
+    }
+    
+    .projects-error i, .no-projects i {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        color: #64748b;
+    }
+    
+    .repo-language-indicator {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        z-index: 1;
+    }
+    
+    .project-meta {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin: 1rem 0;
+        font-size: 0.875rem;
+        color: #64748b;
+    }
+    
+    .repo-language {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .language-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        display: inline-block;
+    }
+    
+    .repo-stars, .repo-forks {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+    }
+    
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    
+    .github-project {
+        animation: fadeInUp 0.6s ease forwards;
+    }
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+`;
+
+// Add the CSS to the document
+const githubStyle = document.createElement('style');
+githubStyle.textContent = githubProjectsCSS;
+document.head.appendChild(githubStyle);
