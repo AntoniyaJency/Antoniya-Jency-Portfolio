@@ -1487,23 +1487,13 @@ text-shadow: 0 0 1px rgba(139, 92, 246, 0.8);}
     box-shadow: var(--shadow-lg);
 }
 
-/* Skills Section - Dark Theme with Spline iframe Background */
+/* Skills Section - Dark Theme with Stars Background */
 .skills {
-    background: #000000;
+    background: url('stars.png') center center/cover no-repeat;
     padding: 6rem 0;
     position: relative;
     overflow: hidden;
     min-height: 100vh;
-}
-
-.skills iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    border: none;
 }
 
 .skills .container {
