@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Allow search engines to discover favicon files
+Allow: /favicon*.png
+Allow: /favicon*.ico
+
+Sitemap: https://your-domain.com/sitemap.xml
